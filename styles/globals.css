@@ -18,5 +18,18 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: white;
+  border-radius: 50px;
+  /* background: #db4200; */
 }
+
+.card{
+  box-shadow: rgba(255, 60, 0, 0.2) 0px 3px 8px;
+  border: 1px solid rgb(255, 60, 0, 0.2)
+}
+
+.form-control{
+max-width: 400px;
+}
+
+
