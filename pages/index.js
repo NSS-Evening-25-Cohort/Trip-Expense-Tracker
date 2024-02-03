@@ -37,32 +37,29 @@ function Home() {
       <div
         style={{
           display: 'flex',
+          flexDirection: 'column',
           alignContent: 'center',
           justifyContent: 'center',
           marginTop: '4%',
           marginBottom: '4%',
         }}
       >
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => {
-            router.push('/AddTrip');
-          }}
-        >
-          Add A New Trip
-        </button>
+        <div>
+          <h1 style={{ textAlign: 'center', marginBottom: '4%' }}>Hello {user.fbUser.displayName}! </h1>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              router.push('/AddTrip');
+            }}
+          >
+            Add A New Trip
+          </button>
+        </div>
       </div>
-      <div
-        className="text-center d-flex flex-column justify-content-center align-content-center"
-        // style={{
-        //   height: '90vh',
-        //   padding: '30px',
-        //   maxWidth: '400px',
-        //   margin: '0 auto',
-        // }}
-      >
-        <h1>Hello {user.fbUser.displayName}! </h1>
+      <div>
         <p>{user.bio}</p>
         <div
           id="card-display"
@@ -76,6 +73,7 @@ function Home() {
         >
           {trips.map((trip) => (
             <div
+              key={trip.uniquekey + 1}
               style={{
                 marginTop: '2%',
                 marginBottom: '2%',
