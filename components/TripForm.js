@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import createNewTrip from '../api/trip';
+
 import { useAuth } from '../utils/context/authContext';
+import { createNewTrip } from '../api/trip';
 
 const initialState = { name: '', date: '', description: '' };
 
