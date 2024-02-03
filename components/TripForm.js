@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import createNewTrip from '../api/trip';
+import { useAuth } from '../utils/context/authContext';
 
 const initialState = { name: '', date: '', description: '' };
 
 function TripForm() {
   const [formInput, setFormInput] = useState(initialState);
-  // const { user } = useAuth();
+  const { user } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,7 +17,7 @@ function TripForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createNewTrip(formInput).then(() => {
+    createNewTrip({ ...formInput, userId: user.id }).then(() => {
       console.log('route to view single trip');
     });
   };
@@ -25,8 +26,6 @@ function TripForm() {
     <form id="tripForm" onSubmit={handleSubmit}>
       <div
         style={{
-          backgroundColor: 'tomato',
-          color: 'white',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -49,7 +48,7 @@ function TripForm() {
           type="date"
           name="date"
           className="form-control"
-          style={{ marginBottom: '6%' }}
+          style={{ marginBottom: '3%' }}
           onChange={handleChange}
         />
         <label htmlFor="description">Description</label>
@@ -61,7 +60,7 @@ function TripForm() {
           style={{ marginBottom: '3%' }}
           onChange={handleChange}
         />
-        <button type="submit" className="btn btn-secondary">
+        <button type="submit" style={{ marginBottom: '4%' }} className="btn btn-secondary">
           Submit{' '}
         </button>
       </div>
