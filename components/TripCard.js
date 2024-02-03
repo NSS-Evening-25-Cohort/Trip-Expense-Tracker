@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TripCard({ trip }) {
-  // const deleteThistrip = () => {
-  //   if (window.confirm(`Delete ${trip.title}?`)) {
-  //     deleteTrip(trip.firebaseKey).then(() => onUpdate());
-  //   }
-  // };
-
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{
+        width: '700px',
+      }}
+    >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} className="card-header">
         <div>
-          <h5>{trip && trip.name ? trip.name : 'Unnamed Trip'}</h5>
+          <h5 style={{ margin: 'none' }}>{trip.name}</h5>
         </div>
         <div
           style={{
@@ -23,7 +22,7 @@ function TripCard({ trip }) {
           }}
         >
           <h6 style={{ marginBottom: '0%', fontSize: '20px' }}>
-            Total: Some Moneis spent
+            {/* Total: ${totalAmount.toLocaleString()} */}
           </h6>
         </div>
       </div>
@@ -31,9 +30,9 @@ function TripCard({ trip }) {
       <div className="card-body">
         <h5 className="card-title">{trip.date}</h5>
         <p className="card-text">{trip.description}</p>
-        {/* <a href="#" className="btn btn-secondary">
-        </a> */}
-        Edit Trip
+        <button type="button" href="#" className="btn btn-secondary">
+          Edit Trip
+        </button>
       </div>
     </div>
   );

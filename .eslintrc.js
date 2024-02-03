@@ -25,7 +25,7 @@ module.exports = {
     ],
     'react/jsx-one-expression-per-line': [0],
     'no-console': [
-      1,
+      0,
       {
         allow: ['error', 'warn'],
       },
