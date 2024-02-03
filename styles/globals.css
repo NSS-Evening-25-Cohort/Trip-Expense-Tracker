@@ -4,8 +4,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -17,19 +17,31 @@ a {
   box-sizing: border-box;
 }
 
+h5 {
+  margin: none;
+}
+
 body {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.822);
   border-radius: 50px;
   /* background: #db4200; */
 }
 
-.card{
-  box-shadow: rgba(255, 60, 0, 0.2) 0px 3px 8px;
-  border: 1px solid rgb(255, 60, 0, 0.2)
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: rgba(255, 255, 255, 0.822);
 }
 
-.form-control{
-max-width: 400px;
+.card-header {
+  background-color: rgba(255, 234, 226, 0.588);
 }
 
+.form-control {
+  max-width: 400px;
+}
 
+.btn.btn-secondary {
+  background-color: rgba(242, 242, 242, 0.865);
+  color: black;
+  border: 1px solid lightgray;
+}

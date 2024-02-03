@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import PropTypes from 'prop-types';
+import createNewTrip from '../api/trip';
 
 const initialState = { name: '', date: '', description: '' };
 
@@ -15,6 +16,9 @@ function TripForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    createNewTrip(formInput).then(() => {
+      console.log('route to view single trip');
+    });
   };
 
   return (
@@ -66,10 +70,10 @@ function TripForm() {
 }
 
 TripForm.propTypes = {
-  obj: propTypes.shape({
-    name: propTypes.string,
-    date: propTypes.string,
-    description: propTypes.string,
+  obj: PropTypes.shape({
+    name: PropTypes.string,
+    date: PropTypes.string,
+    description: PropTypes.string,
   }),
 };
 
