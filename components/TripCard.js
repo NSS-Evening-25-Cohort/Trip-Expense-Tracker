@@ -11,7 +11,6 @@ function TripCard({ tripObj, viewTrip, updateHome }) {
       deleteTrip(tripObj.id)
         .then(() => {
           updateHome();
-          console.log('home was updated');
           if (!viewTrip) { router.push('/'); }
         });
     }
