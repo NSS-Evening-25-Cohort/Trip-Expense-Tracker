@@ -14,10 +14,8 @@ function Home() {
     // Fetch user-specific trips when the user is authenticated
     if (user) {
       getTrips(user.id).then((data) => {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
           setUserTrips(data);
-        } else {
-          setUserTrips([]);
         }
       });
     }
@@ -54,7 +52,7 @@ function Home() {
       </div>
       <div id="card-display">
         {userTrips.map((trip) => (
-          <div key={trip.id}>
+          <div key={trip.id} style={{ display: 'flex', justifyContent: 'center', marginBottom: '2%' }}>
             <TripCard tripObj={{ ...trip, id: String(trip.id) }} onUpdate={getTrips} />
           </div>
         ))}

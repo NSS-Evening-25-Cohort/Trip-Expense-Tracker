@@ -19,6 +19,7 @@ function TripForm({ tripToEdit }) {
   // Sets initial form values when in edit mode
   useEffect(() => {
     if (tripToEdit) {
+      console.log(tripToEdit);
       setFormInput({
         name: tripToEdit.name || '',
         date: tripToEdit.date || '',
@@ -38,10 +39,11 @@ function TripForm({ tripToEdit }) {
     // If there's a tripToEdit prop, update the trip; otherwise, create a new trip
     const action = tripToEdit ? updateTrip : createNewTrip;
 
-    action({ ...formInput, userId: user.id, id: tripToEdit?.id }).then(() => {
-      // Routes back to the home page after form submission
-      Router.push('/');
-    });
+    action({ ...formInput, userId: user.id, id: tripToEdit?.id })
+      .then((tripData) => {
+        console.log(tripData);
+        router.push(`/trip/${tripToEdit.id}`);
+      });
   };
 
   const formTitle = tripToEdit ? 'Update Trip' : 'Create Trip';
@@ -100,7 +102,7 @@ function TripForm({ tripToEdit }) {
 
 TripForm.propTypes = {
   tripToEdit: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     date: PropTypes.string,
     description: PropTypes.string,
