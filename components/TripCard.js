@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
-function TripCard({ trip }) {
+function TripCard({ tripObj }) {
+  const router = useRouter();
   return (
     <div
       className="card"
@@ -11,7 +13,7 @@ function TripCard({ trip }) {
     >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} className="card-header">
         <div>
-          <h5 style={{ margin: 'none' }}>{trip.name}</h5>
+          <h5 style={{ margin: 'none' }}>{tripObj.name}</h5>
         </div>
         <div
           style={{
@@ -28,9 +30,18 @@ function TripCard({ trip }) {
       </div>
 
       <div className="card-body">
-        <h5 className="card-title">{trip.date}</h5>
-        <p className="card-text">{trip.description}</p>
-        <button type="button" href="#" className="btn btn-secondary">
+        <h5 className="card-title">{tripObj.date}</h5>
+        <p className="card-text">{tripObj.description}</p>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => {
+            router.push({
+              pathname: '/trip/edit/[id]',
+              query: { id: tripObj.id },
+            });
+          }}
+        >
           Edit Trip
         </button>
       </div>
@@ -39,7 +50,8 @@ function TripCard({ trip }) {
 }
 
 TripCard.propTypes = {
-  trip: PropTypes.shape({
+  tripObj: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     name: PropTypes.string,
     date: PropTypes.string,
     description: PropTypes.string,
