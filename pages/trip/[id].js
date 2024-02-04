@@ -89,7 +89,6 @@ export default function ViewTrip() {
     getSingleTrip(id).then((tripData) => {
       setTrip(tripData);
     });
-    // initial component mount
     // const totalCalc = expenses.reduce((total, expense) => total + expense.amount, 0);
     // setTotalAmount((prevValue) => totalCalc);
   }, [id]);
@@ -99,16 +98,20 @@ export default function ViewTrip() {
   };
 
   return (
-    <div>
+    <>
       {/* ------------trip--card---------------------------------- */}
       <div
         style={{
-          marginTop: '6%',
-          marginBottom: '6%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignContent: 'center',
+          justifyContent: 'center',
+          marginTop: '4%',
+          marginBottom: '4%',
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '4%' }}><h2>Your Trip:</h2></div>
-        <TripCard tripObj={trip} viewTrip={false} />
+        <div id="header" style={{ textAlign: 'center', marginBottom: '4%' }}><h2>Your Trip:</h2></div>
+        <div id="tripCard" style={{ display: 'flex', justifyContent: 'center' }}><TripCard tripObj={trip} viewTrip={false} /></div>
       </div>
       {/* -----------expsense--cards------ */}
       <div style={{ textAlign: 'center' }}>
@@ -121,6 +124,6 @@ export default function ViewTrip() {
           <ExpenseCard key={item.id} expenseObj={item} />
         ))}
       </div>
-    </div>
+    </>
   );
 }

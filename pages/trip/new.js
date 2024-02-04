@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { useRouter } from 'next/router';
-import TripForm from '../../components/TripForm';
+// eslint-disable-next-line import/no-unresolved
+import TripForm from '../../components/tripForm';
 
 export default function NewTrip() {
   const router = useRouter();
