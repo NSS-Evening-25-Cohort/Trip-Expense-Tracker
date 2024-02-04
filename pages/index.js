@@ -9,20 +9,26 @@ function Home() {
   const router = useRouter();
   const { user } = useAuth();
   const [userTrips, setUserTrips] = useState([]);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     // Fetch user-specific trips when the user is authenticated
     if (user) {
       getTrips(user.id).then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
           setUserTrips(data);
+          console.log(data);
         }
       });
     }
-  }, [user]);
+  }, [user, refresh]);
 
   const handleAddNewTrip = () => {
     router.push('/trip/new');
+  };
+
+  const refreshHomePage = () => {
+    setRefresh((prevVal) => prevVal + 1);
   };
 
   return (
@@ -46,14 +52,25 @@ function Home() {
             className="btn btn-secondary"
             onClick={handleAddNewTrip}
           >
-            Add A New Trip
+            {userTrips.length > 0 ? 'Add a New Trip' : 'Add your first trip...'}
           </button>
         </div>
       </div>
       <div id="card-display">
         {userTrips.map((trip) => (
-          <div key={trip.id} style={{ display: 'flex', justifyContent: 'center', marginBottom: '2%' }}>
-            <TripCard tripObj={{ ...trip, id: String(trip.id) }} onUpdate={getTrips} />
+          <div
+            key={trip.id}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '2%',
+            }}
+          >
+            <TripCard
+              tripObj={{ ...trip, id: String(trip.id) }}
+              viewTrip
+              updateHome={refreshHomePage}
+            />
           </div>
         ))}
       </div>

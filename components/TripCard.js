@@ -1,9 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import { deleteTrip } from '../api/trip';
 
-function TripCard({ tripObj }) {
+function TripCard({ tripObj, viewTrip, updateHome }) {
   const router = useRouter();
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you would like to delete this trip?')) {
+      deleteTrip(tripObj.id)
+        .then(() => {
+          updateHome();
+          console.log('home was updated');
+          if (!viewTrip) { router.push('/'); }
+        });
+    }
+  };
+
   return (
     <div
       className="card"
@@ -13,7 +26,7 @@ function TripCard({ tripObj }) {
     >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} className="card-header">
         <div>
-          <h5 style={{ margin: 'none' }}>{tripObj.name}</h5>
+          <h5 style={{ margin: '0px' }}>{tripObj.name}</h5>
         </div>
         <div
           style={{
@@ -32,9 +45,26 @@ function TripCard({ tripObj }) {
       <div className="card-body">
         <h5 className="card-title">{tripObj.date}</h5>
         <p className="card-text">{tripObj.description}</p>
+        <></>
+        {viewTrip && (
+        <button
+          type="button"
+          className="btn btn-primary"
+          style={{ marginRight: '1.5%' }}
+          onClick={() => {
+            router.push({
+              pathname: '/trip/[id]',
+              query: { id: tripObj.id },
+            });
+          }}
+        >
+          View
+        </button>
+        )}
         <button
           type="button"
           className="btn btn-secondary"
+          style={{ marginRight: '1.5%' }}
           onClick={() => {
             router.push({
               pathname: '/trip/edit/[id]',
@@ -42,20 +72,34 @@ function TripCard({ tripObj }) {
             });
           }}
         >
-          Edit Trip
+          Edit
+        </button>
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={handleDelete}
+        >
+          Delete
         </button>
       </div>
     </div>
   );
 }
 
+TripCard.defaultProps = {
+  updateHome: () => {},
+  viewTrip: PropTypes.bool,
+};
+
 TripCard.propTypes = {
   tripObj: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     date: PropTypes.string,
     description: PropTypes.string,
   }).isRequired,
+  viewTrip: PropTypes.bool,
+  updateHome: PropTypes.func,
 };
 
 export default TripCard;

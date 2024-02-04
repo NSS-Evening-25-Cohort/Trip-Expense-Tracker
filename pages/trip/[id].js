@@ -94,6 +94,10 @@ export default function ViewTrip() {
     // setTotalAmount((prevValue) => totalCalc);
   }, [id]);
 
+  const handleClick = () => {
+    router.push(`/expense/new/${trip.id}`);
+  };
+
   return (
     <div>
       {/* ------------trip--card---------------------------------- */}
@@ -103,9 +107,15 @@ export default function ViewTrip() {
           marginBottom: '6%',
         }}
       >
-        <TripCard tripObj={trip} />
+        <div style={{ textAlign: 'center', marginBottom: '4%' }}><h2>Your Trip:</h2></div>
+        <TripCard tripObj={trip} viewTrip={false} />
       </div>
       {/* -----------expsense--cards------ */}
+      <div style={{ textAlign: 'center' }}>
+        <button type="button" className="btn btn-primary" onClick={handleClick}>
+          {trip.expense_details.length === 0 ? 'Add your first expense' : 'Add an Expense'}
+        </button>
+      </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {trip.expense_details.map((item, index) => (
           <ExpenseCard key={item.id} expenseObj={item} />

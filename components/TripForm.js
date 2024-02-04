@@ -19,7 +19,6 @@ function TripForm({ tripToEdit }) {
   // Sets initial form values when in edit mode
   useEffect(() => {
     if (tripToEdit) {
-      console.log(tripToEdit);
       setFormInput({
         name: tripToEdit.name || '',
         date: tripToEdit.date || '',
@@ -41,8 +40,9 @@ function TripForm({ tripToEdit }) {
 
     action({ ...formInput, userId: user.id, id: tripToEdit?.id })
       .then((tripData) => {
-        console.log(tripData);
-        router.push(`/trip/${tripToEdit.id}`);
+        if (tripToEdit) { router.push(`/trip/${tripToEdit.id}`); } else {
+          router.push(`/trip/${tripData.id}`);
+        }
       });
   };
 

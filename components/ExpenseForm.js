@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   businessIcon, carIcon, flightIcon, foodIcon, lodgingIcon,
 } from '../public/icons';
@@ -18,7 +19,7 @@ const initialState = {
   ],
 };
 
-export default function ExpenseForm() {
+export default function ExpenseForm({ tripId }) {
   const [formInput, setFormInput] = useState(initialState);
   // const { user } = useAuth();
 
@@ -148,3 +149,7 @@ export default function ExpenseForm() {
     </form>
   );
 }
+
+ExpenseForm.propTypes = {
+  tripId: PropTypes.string.isRequired,
+};
