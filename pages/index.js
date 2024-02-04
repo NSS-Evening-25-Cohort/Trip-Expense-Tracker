@@ -17,7 +17,6 @@ function Home() {
       getTrips(user.id).then((data) => {
         if (Array.isArray(data)) {
           setUserTrips(data);
-          console.log(data);
         }
       });
     }
