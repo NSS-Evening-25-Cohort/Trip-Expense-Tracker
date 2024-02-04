@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Navbar, //
+  Navbar,
   Container,
   Nav,
   Button,
@@ -23,7 +23,7 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link passHref href="/AddTrip">
+            <Link passHref href="/trip/new">
               <Nav.Link>New Trip</Nav.Link>
             </Link>
             <Button variant="danger" onClick={signOut}>

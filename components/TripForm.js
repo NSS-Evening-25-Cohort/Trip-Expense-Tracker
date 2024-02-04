@@ -1,15 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import Router, { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
-import { createNewTrip } from '../api/trip';
+import { createNewTrip, updateTrip } from '../api/trip';
 
-const initialState = { name: '', date: '', description: '' };
+const initialState = {
+  name: '',
+  date: '',
+  description: '',
+};
 
-function TripForm() {
+function TripForm({ tripToEdit }) {
   const [formInput, setFormInput] = useState(initialState);
   const { user } = useAuth();
+  const router = useRouter();
+
+  // Sets initial form values when in edit mode
+  useEffect(() => {
+    if (tripToEdit) {
+      setFormInput({
+        name: tripToEdit.name || '',
+        date: tripToEdit.date || '',
+        description: tripToEdit.description || '',
+      });
+    }
+  }, [tripToEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,10 +34,19 @@ function TripForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createNewTrip({ ...formInput, userId: user.id }).then(() => {
-      console.log('route to view single trip');
-    });
+
+    // If there's a tripToEdit prop, update the trip; otherwise, create a new trip
+    const action = tripToEdit ? updateTrip : createNewTrip;
+
+    action({ ...formInput, userId: user.id, id: tripToEdit?.id })
+      .then((tripData) => {
+        if (tripToEdit) { router.push(`/trip/${tripToEdit.id}`); } else {
+          router.push(`/trip/${tripData.id}`);
+        }
+      });
   };
+
+  const formTitle = tripToEdit ? 'Update Trip' : 'Create Trip';
 
   return (
     <form id="tripForm" onSubmit={handleSubmit}>
@@ -34,7 +59,7 @@ function TripForm() {
         }}
         className="text-center my-4"
       >
-        <h2 style={{ marginBottom: '8%' }}>Create Trip</h2>
+        <h2 style={{ marginBottom: '8%' }}>{formTitle}</h2>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -50,6 +75,7 @@ function TripForm() {
           name="date"
           className="form-control"
           style={{ marginBottom: '3%' }}
+          value={formInput.date}
           onChange={handleChange}
         />
         <label htmlFor="description">Description</label>
@@ -59,10 +85,15 @@ function TripForm() {
           id="description"
           className="form-control"
           style={{ marginBottom: '3%' }}
+          value={formInput.description}
           onChange={handleChange}
         />
-        <button type="submit" style={{ marginBottom: '4%' }} className="btn btn-secondary">
-          Submit{' '}
+        <button
+          type="submit"
+          style={{ marginBottom: '4%' }}
+          className="btn btn-secondary"
+        >
+          {formTitle}
         </button>
       </div>
     </form>
@@ -70,7 +101,8 @@ function TripForm() {
 }
 
 TripForm.propTypes = {
-  obj: PropTypes.shape({
+  tripToEdit: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
     date: PropTypes.string,
     description: PropTypes.string,
@@ -78,11 +110,7 @@ TripForm.propTypes = {
 };
 
 TripForm.defaultProps = {
-  obj: {
-    name: '',
-    date: '',
-    description: '',
-  },
+  tripToEdit: null,
 };
 
 export default TripForm;
