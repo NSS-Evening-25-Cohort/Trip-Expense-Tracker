@@ -15,7 +15,7 @@ function TripForm({ tripToEdit }) {
   const [formInput, setFormInput] = useState(initialState);
   const { user } = useAuth();
   const router = useRouter();
-
+  console.log(user);
   // Sets initial form values when in edit mode
   useEffect(() => {
     if (tripToEdit) {
