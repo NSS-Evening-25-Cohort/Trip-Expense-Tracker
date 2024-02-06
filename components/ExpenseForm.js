@@ -5,23 +5,28 @@ import PropTypes from 'prop-types';
 import {
   businessIcon, carIcon, flightIcon, foodIcon, lodgingIcon,
 } from '../public/icons';
+import { createNewExpense } from '../api/expense';
+import { useAuth } from '../utils/context/authContext';
 
 const initialState = {
+  name: '',
   amount: '',
   description: '',
   date: '',
-  categories: [
-    { name: 'business', checked: 'false' },
-    { name: 'flights', checked: 'false' },
-    { name: 'dining', checked: 'false' },
-    { name: 'rentalCar', checked: 'false' },
-    { name: 'lodging', checked: 'false' },
-  ],
 };
+
+const initialCats = [
+  { id: 1, name: 'dining', checked: 'false' },
+  { id: 2, name: 'business', checked: 'false' },
+  { id: 3, name: 'flights', checked: 'false' },
+  { id: 4, name: 'rentalCar', checked: 'false' },
+  { id: 5, name: 'lodging', checked: 'false' },
+];
 
 export default function ExpenseForm({ tripId }) {
   const [formInput, setFormInput] = useState(initialState);
-  // const { user } = useAuth();
+  const [cats, setCats] = useState(initialCats);
+  const { user } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,15 +35,42 @@ export default function ExpenseForm({ tripId }) {
 
   const handleCheck = (e, index) => {
     const { target: { checked } } = e;
-    setFormInput((prevValue) => {
-      const newArray = [...prevValue.categories]; // Copy the categories array
+    setCats((prevValue) => {
+      const newArray = [...prevValue]; // Copy the categories array
       newArray[index] = { ...newArray[index], checked }; // Update the specific item at the index
-      return { ...prevValue, categories: newArray }; // Return the updated formInput
+      return newArray; // Return the updated formInput
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { amount } = formInput;
+    const numAmount = Number(amount);
+    const formatted = numAmount.toFixed(2);
+    formInput.amount = formatted;
+    const payload = { ...formInput, user: user.id };
+    createNewExpense(payload).then((expenseData) => {
+      console.log(expenseData);
+      // const checkedCategories = cats.filter((category) => category.checked);
+      // const promiseArray = checkedCategories.map((category) => createNewCatExp(
+      //   {
+      //     categoryId: category.id,
+      //     expenseId: expenseData.id,
+      //   },
+      // ));
+      // Promise.all(promiseArray).then(() => {
+      //   console.log('all category expenses added');
+      // });
+      // ----------------^-this-is-the-nice-way-to-do-it------------------------
+
+      // or:
+      // for (const category of cats) {
+      // if(category.checked){
+      //   createNewExpenseCat({ catId: category.id, expenseId: expenseData.id });
+      // }
+      //
+      // }
+    });
   };
 
   return (
@@ -54,6 +86,16 @@ export default function ExpenseForm({ tripId }) {
         className="text-center my-4"
       >
         <h2 style={{ marginBottom: '8%' }}>Create Expense</h2>
+        <label htmlFor="amount">Name</label>
+        <input
+          type="name"
+          name="name"
+          id="name"
+          className="form-control"
+          style={{ marginBottom: '3%' }}
+          value={formInput.name}
+          onChange={handleChange}
+        />
         <label htmlFor="amount">Amount</label>
         <input
           type="number"
@@ -89,7 +131,7 @@ export default function ExpenseForm({ tripId }) {
           <div className="card-body">
             <h5 className="card-title">Assign a Category</h5>
             <div className="card-text">
-              {formInput.categories.map((item, index) => (
+              {cats.map((item, index) => (
                 <div className="form-check" key={`category${index}`}>
                   <input
                     className="form-check-input"
