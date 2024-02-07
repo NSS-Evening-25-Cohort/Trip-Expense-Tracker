@@ -1,12 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import {
   businessIcon, carIcon, flightIcon, foodIcon, lodgingIcon,
 } from '../public/icons';
-import { createNewExpense } from '../api/expense';
+import { createNewExpense, updateExpense } from '../api/expense';
 import { useAuth } from '../utils/context/authContext';
 
 const initialState = {
@@ -24,11 +24,22 @@ const initialCats = [
   { id: 5, name: 'lodging', checked: false },
 ];
 
-export default function ExpenseForm({ tripId }) {
+export default function ExpenseForm({ tripId, expenseObj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [cats, setCats] = useState(initialCats);
   const { user } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (expenseObj.description) {
+      const baseArray = expenseObj.description;
+      const [description, catsData] = baseArray.split('YY');
+      const wrappedCats = `[${catsData}]`;
+      const catsArray = JSON.parse(wrappedCats);
+      setCats(catsArray);
+      setFormInput({ ...expenseObj, description });
+    }
+  }, [expenseObj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,9 +66,17 @@ export default function ExpenseForm({ tripId }) {
     const formattedDesc = `${formInput.description}YY${cateString2}`;
     formInput.description = formattedDesc;
     const payload = { ...formInput, trip: tripId, user: user.id };
-    createNewExpense(payload).then(() => {
-      router.push(`/trip/${tripId}`);
-    });
+    if (!expenseObj.description) {
+      console.log('create');
+      createNewExpense(payload).then(() => {
+        router.push(`/trip/${tripId}`);
+      });
+    } else {
+      updateExpense(payload, user.id).then((data) => {
+        console.log(data);
+        router.push(`/trip/${tripId}`);
+      });
+    }
   };
 
   return (
@@ -72,7 +91,7 @@ export default function ExpenseForm({ tripId }) {
         }}
         className="text-center my-4"
       >
-        <h2 style={{ marginBottom: '8%' }}>Create Expense</h2>
+        <h2 style={{ marginBottom: '8%' }}>{expenseObj ? 'Update Expense' : 'Create Expense'}</h2>
         <label htmlFor="amount">Name</label>
         <input
           type="name"
@@ -125,7 +144,7 @@ export default function ExpenseForm({ tripId }) {
                     className="form-check-input"
                     key={`input${index}`}
                     type="checkbox"
-                    value=""
+                    checked={item.checked}
                     id={`item${index}`}
                     onChange={(e) => {
                       handleCheck(e, index);
@@ -182,4 +201,7 @@ export default function ExpenseForm({ tripId }) {
 
 ExpenseForm.propTypes = {
   tripId: PropTypes.number.isRequired,
+  expenseObj: PropTypes.shape({
+    description: PropTypes.string,
+  }).isRequired,
 };

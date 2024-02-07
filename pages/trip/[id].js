@@ -21,16 +21,6 @@ export default function ViewTrip() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [trip, setTrip] = useState(initialState);
 
-  // useEffect(() => {
-  //   getSingleTrip(id).then((tripData) => {
-  //     // setTrip(tripData);
-  //     const totalCalc = tripData.expense_details
-  //       .map((expense) => Number(expense.amount))
-  //       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  //     setTotalAmount((prevValue) => totalCalc);
-  //   });
-  // }, [id]);
-
   useEffect(() => {
     getSingleTrip(id).then((tripData) => {
       setTrip(tripData);
@@ -39,8 +29,6 @@ export default function ViewTrip() {
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       setTotalAmount(totalCalc);
     });
-    // const totalCalc = expenses.reduce((total, expense) => total + expense.amount, 0);
-    // setTotalAmount((prevValue) => totalCalc);
   }, [id]);
 
   const handleClick = () => {
