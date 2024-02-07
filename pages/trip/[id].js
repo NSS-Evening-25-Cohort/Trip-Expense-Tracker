@@ -81,6 +81,7 @@ const initialState = {
 export default function ViewTrip() {
   const router = useRouter();
   const { id } = router.query;
+  console.log(typeof (id));
   //   const [expenseArr, setExpenseArr] = useState(expenses);
   const [totalAmount, setTotalAmount] = useState(0);
   const [trip, setTrip] = useState(initialState);
