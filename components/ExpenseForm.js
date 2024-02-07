@@ -97,6 +97,7 @@ export default function ExpenseForm({ tripId }) {
           style={{ marginBottom: '3%' }}
           value={formInput.name}
           onChange={handleChange}
+          autoComplete="off"
         />
         <label htmlFor="amount">Amount</label>
         <input

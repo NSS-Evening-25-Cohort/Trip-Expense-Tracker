@@ -5,7 +5,6 @@ import { deleteTrip } from '../api/trip';
 
 function TripCard({ tripObj, viewTrip, updateHome }) {
   const router = useRouter();
-  console.log(tripObj);
   const handleDelete = () => {
     if (window.confirm('Are you sure you would like to delete this trip?')) {
       deleteTrip(tripObj.id)
