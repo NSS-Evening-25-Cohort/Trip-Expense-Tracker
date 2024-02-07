@@ -16,7 +16,14 @@ function Home() {
     if (user) {
       getTrips(user.id).then((data) => {
         if (Array.isArray(data)) {
-          setUserTrips(data);
+          const tripArray = [...data];
+          const updatedTrips = tripArray.map((trip) => {
+            const totalAmount = trip.expense_details.reduce(
+              (acc, expense) => acc + parseFloat(expense.amount), 0,
+            );
+            return { ...trip, amount: totalAmount };
+          });
+          setUserTrips(updatedTrips);
         }
       });
     }
@@ -69,6 +76,7 @@ function Home() {
               tripObj={trip}
               viewTrip
               updateHome={refreshHomePage}
+              amount={trip.amount}
             />
           </div>
         ))}

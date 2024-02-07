@@ -39,7 +39,7 @@ function TripCard({
           }}
         >
           <h6 style={{ marginBottom: '0%', fontSize: '20px' }}>
-            ${amount.toFixed(2)}
+            ${amount?.toFixed(2)}
           </h6>
         </div>
       </div>

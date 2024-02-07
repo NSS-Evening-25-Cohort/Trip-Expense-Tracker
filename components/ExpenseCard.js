@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useRouter } from 'next/router';
 import {
   businessIcon,
   flightIcon,
@@ -10,11 +11,12 @@ import {
   from '../public/icons';
 
 export default function ExpenseCard({ expenseObj }) {
-  const baseArray = expenseObj.description;
-  const [description, cats] = baseArray.split('YY');
+  const baseArray = expenseObj?.description;
+  const [description, cats] = baseArray.split('Y&@P');
   const wrappedCats = `[${cats}]`;
   const catsArray = JSON.parse(wrappedCats);
   const catArrFiltered = catsArray.filter((cat) => cat.checked);
+  const router = useRouter();
 
   return (
     <div className="card" style={{ width: '18rem', marginBottom: '2%' }}>
@@ -63,7 +65,18 @@ export default function ExpenseCard({ expenseObj }) {
           padding: '4%',
         }}
       >
-        <button type="button" className="btn btn-secondary">
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => {
+            router.push({
+              pathname: `/expense/edit/${expenseObj.id}`,
+              query: {
+                param1: `${expenseObj.tripId}`,
+              },
+            });
+          }}
+        >
           Edit
         </button>
         <button type="button" className="btn btn-danger">
