@@ -13,7 +13,7 @@ export default function EditExpense() {
     getSingleExpense(id).then((data) => {
       setExpenseObj({ ...data, id: (data.id), tripId: param1 });
     });
-  }, [id]);
+  }, [id, param1]);
 
   return <ExpenseForm expenseObj={expenseObj} />;
 
