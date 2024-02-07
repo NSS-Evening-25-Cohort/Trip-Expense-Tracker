@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
 import { createNewTrip, updateTrip } from '../api/trip';
 
