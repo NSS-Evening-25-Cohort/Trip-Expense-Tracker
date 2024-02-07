@@ -35,4 +35,22 @@ const updateExpense = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { createNewExpense, getSingleExpense, updateExpense };
+const deleteExpense = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/expenses/${id}`, {
+    method: 'DELETE',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      resolve();
+    })
+    .catch(reject);
+});
+
+export {
+  createNewExpense,
+  getSingleExpense,
+  updateExpense,
+  deleteExpense,
+};
