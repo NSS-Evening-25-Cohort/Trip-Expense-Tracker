@@ -64,15 +64,18 @@ function TripForm({ tripToEdit }) {
         <input
           type="text"
           name="name"
+          id="name"
           className="form-control"
           style={{ marginBottom: '3%' }}
           value={formInput.name}
           onChange={handleChange}
+          autoComplete="off"
         />
         <label htmlFor="date">Date</label>
         <input
           type="date"
           name="date"
+          id="date"
           className="form-control"
           style={{ marginBottom: '3%' }}
           value={formInput.date}
