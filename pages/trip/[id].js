@@ -21,6 +21,28 @@ export default function ViewTrip() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [trip, setTrip] = useState(initialState);
 
+  // useEffect(() => {
+  //   getSingleTrip(id).then((tripData) => {
+  //     // setTrip(tripData);
+  //     const totalCalc = tripData.expense_details
+  //       .map((expense) => Number(expense.amount))
+  //       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  //     setTotalAmount((prevValue) => totalCalc);
+  //   });
+  // }, [id]);
+
+  useEffect(() => {
+    getSingleTrip(id).then((tripData) => {
+      setTrip(tripData);
+      const totalCalc = tripData.expense_details
+        .map((expense) => Number(expense.amount))
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      setTotalAmount(totalCalc);
+    });
+    // const totalCalc = expenses.reduce((total, expense) => total + expense.amount, 0);
+    // setTotalAmount((prevValue) => totalCalc);
+  }, [id]);
+
   const handleClick = () => {
     router.push(`/expense/new/${trip.id}`);
   };
@@ -38,10 +60,13 @@ export default function ViewTrip() {
           marginBottom: '4%',
         }}
       >
-        <div id="header" style={{ textAlign: 'center', marginBottom: '4%' }}><h2>Your Trip:</h2></div>
-        <div id="tripCard" style={{ display: 'flex', justifyContent: 'center' }}><TripCard tripObj={trip} viewTrip={false} /></div>
+        <div id="header" style={{ textAlign: 'center', marginBottom: '4%' }}>
+          <h2>Your Trip:</h2>
+        </div>
+        <div id="tripCard" style={{ display: 'flex', justifyContent: 'center' }}>
+          <TripCard tripObj={trip} viewTrip={false} amount={totalAmount} />
+        </div>
       </div>
-      {/* ----------button------------------ */}
       <div style={{ textAlign: 'center' }}>
         <button
           type="button"
