@@ -1,9 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { deleteTrip } from '../api/trip';
 
-function TripCard({ tripObj, viewTrip, updateHome }) {
+function TripCard({
+  // eslint-disable-next-line react/prop-types
+  tripObj, viewTrip, updateHome, amount,
+}) {
   const router = useRouter();
   const handleDelete = () => {
     if (window.confirm('Are you sure you would like to delete this trip?')) {
@@ -31,11 +35,11 @@ function TripCard({ tripObj, viewTrip, updateHome }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
-            marginRight: '15%',
+            marginRight: '3%',
           }}
         >
           <h6 style={{ marginBottom: '0%', fontSize: '20px' }}>
-            {/* Total: ${totalAmount.toLocaleString()} */}
+            ${amount.toFixed(2)}
           </h6>
         </div>
       </div>

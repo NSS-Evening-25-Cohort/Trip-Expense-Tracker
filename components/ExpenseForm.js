@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import {
   businessIcon, carIcon, flightIcon, foodIcon, lodgingIcon,
 } from '../public/icons';
@@ -16,17 +17,18 @@ const initialState = {
 };
 
 const initialCats = [
-  { id: 1, name: 'dining', checked: 'false' },
-  { id: 2, name: 'business', checked: 'false' },
-  { id: 3, name: 'flights', checked: 'false' },
-  { id: 4, name: 'rentalCar', checked: 'false' },
-  { id: 5, name: 'lodging', checked: 'false' },
+  { id: 1, name: 'dining', checked: false },
+  { id: 2, name: 'business', checked: false },
+  { id: 3, name: 'flights', checked: false },
+  { id: 4, name: 'rentalCar', checked: false },
+  { id: 5, name: 'lodging', checked: false },
 ];
 
 export default function ExpenseForm({ tripId }) {
   const [formInput, setFormInput] = useState(initialState);
   const [cats, setCats] = useState(initialCats);
   const { user } = useAuth();
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,32 +48,15 @@ export default function ExpenseForm({ tripId }) {
     e.preventDefault();
     const { amount } = formInput;
     const numAmount = Number(amount);
-    const formatted = numAmount.toFixed(2);
-    formInput.amount = formatted;
-    const payload = { ...formInput, user: user.id };
-    createNewExpense(payload).then((expenseData) => {
-      console.log(expenseData);
-      // const checkedCategories = cats.filter((category) => category.checked);
-      // const promiseArray = checkedCategories.map((category) => createNewCatExp(
-      //   {
-      //     categoryId: category.id,
-      //     expenseId: expenseData.id,
-      //   },
-      // ));
-      // Promise.all(promiseArray).then(() => {
-      //   console.log('all category expenses added');
-      // });
-
-      // {{categoryId, expenseId, id: 1}}
-      // --------------^-this-is-the-nice-way-to-do-it-----------------
-
-      // or:
-      // for (const category of cats) {
-      // if(category.checked){
-      //   createNewCatExpense({ catId: category.id, expenseId: expenseData.id });
-      // }
-      //
-      // }
+    const formattedNum = numAmount.toFixed(2);
+    formInput.amount = formattedNum;
+    const catString = cats.map((cat) => JSON.stringify(cat));
+    const cateString2 = catString.toString();
+    const formattedDesc = `${formInput.description}YY${cateString2}`;
+    formInput.description = formattedDesc;
+    const payload = { ...formInput, trip: tripId, user: user.id };
+    createNewExpense(payload).then(() => {
+      router.push(`/trip/${tripId}`);
     });
   };
 
