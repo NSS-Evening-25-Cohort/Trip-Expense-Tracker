@@ -10,6 +10,12 @@ import {
   from '../public/icons';
 
 export default function ExpenseCard({ expenseObj }) {
+  const baseArray = expenseObj.description;
+  const [description, cats] = baseArray.split('YY');
+  const wrappedCats = `[${cats}]`;
+  const catsArray = JSON.parse(wrappedCats);
+  const catArrFiltered = catsArray.filter((cat) => cat.checked);
+
   return (
     <div className="card" style={{ width: '18rem', marginBottom: '2%' }}>
       {/* --------card--header----------- */}
@@ -30,7 +36,7 @@ export default function ExpenseCard({ expenseObj }) {
             justifyContent: 'flex-end',
           }}
         >
-          {expenseObj.categories.map((category) => (
+          {catArrFiltered.map((category) => (
             <div key={category.id} style={{ textAlign: 'right' }}>
               {category.name === 'business' && businessIcon}
               {category.name === 'flights' && flightIcon}
@@ -47,7 +53,7 @@ export default function ExpenseCard({ expenseObj }) {
           <i>{expenseObj.date}</i>
         </p>
         <h5 className="card-title">${expenseObj.amount}</h5>
-        <p className="card-text">{expenseObj.description}</p>
+        <p className="card-text">{description}</p>
       </div>
       <div
         style={{
