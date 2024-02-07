@@ -6,12 +6,12 @@ import { getSingleTrip } from '../../../api/trip';
 import TripForm from '../../../components/TripForm';
 
 export default function EditTrip() {
-  const [editTrip, setEditTrip] = useState({});
+  const [editTrip, setEditTrip] = useState({ id: 0 });
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
-    getSingleTrip(id).then((data) => setEditTrip({ ...data, id: String(data.id) }));
+    getSingleTrip(id).then((data) => setEditTrip({ ...data, id: (data.id) }));
   }, [id]);
 
   return <TripForm tripToEdit={editTrip} />;

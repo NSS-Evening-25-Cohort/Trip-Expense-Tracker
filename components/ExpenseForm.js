@@ -68,7 +68,7 @@ export default function ExpenseForm({ tripId }) {
       // or:
       // for (const category of cats) {
       // if(category.checked){
-      //   createNewExpenseCat({ catId: category.id, expenseId: expenseData.id });
+      //   createNewCatExpense({ catId: category.id, expenseId: expenseData.id });
       // }
       //
       // }
@@ -195,5 +195,5 @@ export default function ExpenseForm({ tripId }) {
 }
 
 ExpenseForm.propTypes = {
-  tripId: PropTypes.string.isRequired,
+  tripId: PropTypes.number.isRequired,
 };

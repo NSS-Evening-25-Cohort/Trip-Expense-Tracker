@@ -74,14 +74,13 @@ const initialState = {
   date: '',
   description: '',
   expense_details: [],
-  id: '',
+  id: 0,
   user_details: '',
 };
 
 export default function ViewTrip() {
   const router = useRouter();
   const { id } = router.query;
-  console.log(typeof (id));
   //   const [expenseArr, setExpenseArr] = useState(expenses);
   const [totalAmount, setTotalAmount] = useState(0);
   const [trip, setTrip] = useState(initialState);
