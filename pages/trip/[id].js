@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import ExpenseCard from '../../components/ExpenseCard';
 import TripCard from '../../components/TripCard';
-import { getSingleTrip } from '../../api/trip';
+import { getSingleTrip, updateTrip } from '../../api/trip';
 
 const initialState = {
   name: '',
@@ -20,6 +20,7 @@ export default function ViewTrip() {
   //   const [expenseArr, setExpenseArr] = useState(expenses);
   const [totalAmount, setTotalAmount] = useState(0);
   const [trip, setTrip] = useState(initialState);
+  const [refreshTrip, setRefreshTrip] = useState(0);
 
   useEffect(() => {
     getSingleTrip(id).then((tripData) => {
@@ -36,10 +37,14 @@ export default function ViewTrip() {
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       setTotalAmount(totalCalcArray);
     });
-  }, [id]);
+  }, [id, refreshTrip]);
 
   const handleClick = () => {
     router.push(`/expense/new/${trip.id}`);
+  };
+
+  const changeRefreshTrip = () => {
+    setRefreshTrip((prevVal) => prevVal + 1);
   };
 
   return (
@@ -75,7 +80,11 @@ export default function ViewTrip() {
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {trip.expense_details.map((item, index) => (
-          <ExpenseCard key={item.id} expenseObj={item} />
+          <ExpenseCard
+            key={item.id}
+            expenseObj={item}
+            refreshTrip={changeRefreshTrip}
+          />
         ))}
       </div>
     </>

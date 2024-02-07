@@ -9,8 +9,9 @@ import {
   lodgingIcon,
 }
   from '../public/icons';
+import { deleteExpense } from '../api/expense';
 
-export default function ExpenseCard({ expenseObj }) {
+export default function ExpenseCard({ expenseObj, refreshTrip }) {
   const baseArray = expenseObj?.description;
   const [description, cats] = baseArray.split('Y&@P');
   const wrappedCats = `[${cats}]`;
@@ -79,7 +80,14 @@ export default function ExpenseCard({ expenseObj }) {
         >
           Edit
         </button>
-        <button type="button" className="btn btn-danger">
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={() => {
+            deleteExpense(expenseObj.id)
+              .then(() => { refreshTrip(); });
+          }}
+        >
           Delete
         </button>
       </div>
