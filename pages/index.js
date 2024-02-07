@@ -66,7 +66,7 @@ function Home() {
             }}
           >
             <TripCard
-              tripObj={{ ...trip, id: String(trip.id) }}
+              tripObj={trip}
               viewTrip
               updateHome={refreshHomePage}
             />

@@ -15,7 +15,7 @@ function TripForm({ tripToEdit }) {
   const [formInput, setFormInput] = useState(initialState);
   const { user } = useAuth();
   const router = useRouter();
-  console.log(user);
+
   // Sets initial form values when in edit mode
   useEffect(() => {
     if (tripToEdit) {
@@ -35,9 +35,9 @@ function TripForm({ tripToEdit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // If there's a tripToEdit prop, update the trip; otherwise, create a new trip
     const action = tripToEdit ? updateTrip : createNewTrip;
-
+    // const dateFormatted = new Date(formInput.date);
+    // formInput.date = dateFormatted;
     action({ ...formInput, userId: user.id, id: tripToEdit?.id })
       .then((tripData) => {
         if (tripToEdit) { router.push(`/trip/${tripToEdit.id}`); } else {
@@ -102,7 +102,7 @@ function TripForm({ tripToEdit }) {
 
 TripForm.propTypes = {
   tripToEdit: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     date: PropTypes.string,
     description: PropTypes.string,

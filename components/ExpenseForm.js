@@ -36,9 +36,9 @@ export default function ExpenseForm({ tripId }) {
   const handleCheck = (e, index) => {
     const { target: { checked } } = e;
     setCats((prevValue) => {
-      const newArray = [...prevValue]; // Copy the categories array
-      newArray[index] = { ...newArray[index], checked }; // Update the specific item at the index
-      return newArray; // Return the updated formInput
+      const newArray = [...prevValue];
+      newArray[index] = { ...newArray[index], checked };
+      return newArray;
     });
   };
 
@@ -61,7 +61,9 @@ export default function ExpenseForm({ tripId }) {
       // Promise.all(promiseArray).then(() => {
       //   console.log('all category expenses added');
       // });
-      // ----------------^-this-is-the-nice-way-to-do-it------------------------
+
+      // {{categoryId, expenseId, id: 1}}
+      // --------------^-this-is-the-nice-way-to-do-it-----------------
 
       // or:
       // for (const category of cats) {
