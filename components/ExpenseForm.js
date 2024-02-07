@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
@@ -212,4 +213,5 @@ ExpenseForm.defaultProps = {
   expenseObj: {
     id: 0,
   },
+  tripId: undefined,
 };
