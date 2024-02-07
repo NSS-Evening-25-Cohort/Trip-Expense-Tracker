@@ -23,11 +23,18 @@ export default function ViewTrip() {
 
   useEffect(() => {
     getSingleTrip(id).then((tripData) => {
-      setTrip(tripData);
-      const totalCalc = tripData.expense_details
+      const tripCopy = tripData;
+      const expenses = tripData.expense_details;
+      const updatedExpenses = expenses.map((item) => ({
+        ...item,
+        tripId: id,
+      }));
+      tripCopy.expense_details = updatedExpenses;
+      setTrip(tripCopy);
+      const totalCalcArray = tripData.expense_details
         .map((expense) => Number(expense.amount))
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-      setTotalAmount(totalCalc);
+      setTotalAmount(totalCalcArray);
     });
   }, [id]);
 

@@ -21,12 +21,12 @@ const createNewExpense = (payload, uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updateExpense = (payload, uid) => new Promise((resolve, reject) => {
+const updateExpense = (payload) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/expenses`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `${uid}`,
+      // Authorization: `${uid}`,
     },
     body: JSON.stringify(payload),
   })

@@ -12,7 +12,7 @@ import {
 
 export default function ExpenseCard({ expenseObj }) {
   const baseArray = expenseObj?.description;
-  const [description, cats] = baseArray.split('YY');
+  const [description, cats] = baseArray.split('Y&@P');
   const wrappedCats = `[${cats}]`;
   const catsArray = JSON.parse(wrappedCats);
   const catArrFiltered = catsArray.filter((cat) => cat.checked);
@@ -68,7 +68,14 @@ export default function ExpenseCard({ expenseObj }) {
         <button
           type="button"
           className="btn btn-secondary"
-          onClick={() => { router.push(`/expense/edit/${expenseObj.id}`); }}
+          onClick={() => {
+            router.push({
+              pathname: `/expense/edit/${expenseObj.id}`,
+              query: {
+                param1: `${expenseObj.tripId}`,
+              },
+            });
+          }}
         >
           Edit
         </button>

@@ -31,9 +31,9 @@ export default function ExpenseForm({ tripId, expenseObj }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (expenseObj.description) {
+    if (expenseObj?.description) {
       const baseArray = expenseObj.description;
-      const [description, catsData] = baseArray.split('YY');
+      const [description, catsData] = baseArray.split('Y&@P');
       const wrappedCats = `[${catsData}]`;
       const catsArray = JSON.parse(wrappedCats);
       setCats(catsArray);
@@ -63,7 +63,7 @@ export default function ExpenseForm({ tripId, expenseObj }) {
     formInput.amount = formattedNum;
     const catString = cats.map((cat) => JSON.stringify(cat));
     const cateString2 = catString.toString();
-    const formattedDesc = `${formInput.description}YY${cateString2}`;
+    const formattedDesc = `${formInput.description}Y&@P${cateString2}`;
     formInput.description = formattedDesc;
     const payload = { ...formInput, trip: tripId, user: user.id };
     if (!expenseObj.description) {
@@ -72,9 +72,11 @@ export default function ExpenseForm({ tripId, expenseObj }) {
         router.push(`/trip/${tripId}`);
       });
     } else {
-      updateExpense(payload, user.id).then((data) => {
+      console.log('update');
+      console.log(expenseObj.tripId);
+      updateExpense(payload).then((data) => {
         console.log(data);
-        router.push(`/trip/${tripId}`);
+        router.push(`/trip/${expenseObj.tripId}`);
       });
     }
   };
@@ -200,8 +202,14 @@ export default function ExpenseForm({ tripId, expenseObj }) {
 }
 
 ExpenseForm.propTypes = {
-  tripId: PropTypes.number.isRequired,
+  tripId: PropTypes.number,
   expenseObj: PropTypes.shape({
     description: PropTypes.string,
-  }).isRequired,
+  }),
+};
+
+ExpenseForm.defaultProps = {
+  expenseObj: {
+    id: 0,
+  },
 };
