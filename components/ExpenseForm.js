@@ -99,7 +99,7 @@ export default function ExpenseForm({ tripId, expenseObj }) {
         }}
         className="text-center my-4"
       >
-        <h2 style={{ marginBottom: '8%' }}>{expenseObj ? 'Update Expense' : 'Create Expense'}</h2>
+        <h2 style={{ marginBottom: '8%' }}>{expenseObj.description ? 'Update Expense' : 'Create Expense'}</h2>
         <label htmlFor="amount">Name</label>
         <input
           type="name"
