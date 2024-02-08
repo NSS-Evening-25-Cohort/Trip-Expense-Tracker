@@ -63,20 +63,25 @@ export default function ExpenseForm({ tripId, expenseObj }) {
     const formattedNum = numAmount.toFixed(2);
     formInput.amount = formattedNum;
     const catString = cats.map((cat) => JSON.stringify(cat));
-    const cateString2 = catString.toString();
-    const formattedDesc = `${formInput.description}Y&@P${cateString2}`;
+    const catString2 = catString.toString();
+    const formattedDesc = `${formInput.description}Y&@P${catString2}`;
     formInput.description = formattedDesc;
     const payload = { ...formInput, trip: tripId, user: user.id };
     if (!expenseObj.description) {
-      console.log('create');
       createNewExpense(payload).then(() => {
         router.push(`/trip/${tripId}`);
       });
     } else {
-      console.log('update');
-      console.log(expenseObj.tripId);
-      updateExpense(payload).then((data) => {
-        console.log(data);
+      const updatePayload = {
+        id: expenseObj.id,
+        name: formInput.name,
+        amount: formInput.amount,
+        description: formInput.description,
+        date: formInput.date,
+        trip: Number(expenseObj.tripId),
+        user: user.id,
+      };
+      updateExpense(updatePayload, user.id).then((data) => {
         router.push(`/trip/${expenseObj.tripId}`);
       });
     }
@@ -105,6 +110,7 @@ export default function ExpenseForm({ tripId, expenseObj }) {
           value={formInput.name}
           onChange={handleChange}
           autoComplete="off"
+          maxLength={23}
         />
         <label htmlFor="amount">Amount</label>
         <input
