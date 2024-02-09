@@ -25,15 +25,22 @@ body {
   background-color: rgba(255, 255, 255, 0.822);
   border-radius: 50px;
   /* background: #db4200; */
+  background: rgb(3,148,228);
+  height: 100vh;
+  width: 100wh;
+  background: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+/* background: linear-gradient(0deg, rgba(3, 149, 228, 0.1) 40%, rgba(249, 178, 0, 0.2) 95%); */
 }
 
 .card {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   background-color: rgba(255, 255, 255, 0.822);
+  /* border: 1px solid rgb(192, 192, 192, .8) */
 }
 
 .card-header {
-  background-color: rgba(255, 234, 226, 0.588);
+  background-color: rgba(5, 124, 171, 0.178);
 }
 
 .form-control {
@@ -41,7 +48,42 @@ body {
 }
 
 .btn.btn-secondary {
-  background-color: rgba(242, 242, 242, 0.865);
+  background-color: rgba(221, 221, 221, 0.865);
   color: black;
   border: 1px solid lightgray;
+  transition: all 1.5s ease;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  &:hover {
+    background-color: rgba(5, 124, 171, 0.178);
+    border: 1px solid rgb(80, 182, 255, .5);
+  }
+}
+
+.btn.btn-primary {
+  background-color: rgba(221, 221, 221, 0.865);
+  border: 1px solid grey;
+  border: 1px solid lightgray;
+  transition: all 1s ease;
+  color: black;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  &:hover {
+    background-color: rgba(5, 124, 171, 0.178);
+    border: 1px solid rgb(80, 182, 255, .5);
+  }
+}
+
+
+.btn.btn-danger {
+  background-color: rgb(249, 89, 21, .8);
+  border: 1px solid rgb(249, 89, 21, .8);
+  transition: all 2.5s ease;
+  color: white;
+
+  &:hover {
+    background-color: rgba(5, 124, 171, 0.178);
+    border: 1px solid rgb(80, 182, 255, .5);
+    color: black;
+  }
 }
