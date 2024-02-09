@@ -84,8 +84,10 @@ export default function ExpenseCard({ expenseObj, refreshTrip }) {
           type="button"
           className="btn btn-danger"
           onClick={() => {
-            deleteExpense(expenseObj.id)
-              .then(() => { refreshTrip(); });
+            if (window.confirm('Are you sure you would like to delete this expense')) {
+              deleteExpense(expenseObj.id)
+                .then(() => { refreshTrip(); });
+            }
           }}
         >
           Delete
